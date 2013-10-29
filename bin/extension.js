@@ -85,7 +85,6 @@ var Codeivate;
     })();
     Codeivate.Extension = Extension;
 })(Codeivate || (Codeivate = {}));
-var Codeivate;
 
 (function (Codeivate) {
     var User = (function () {
@@ -101,4 +100,38 @@ var Codeivate;
         return User;
     })();
     Codeivate.User = User;
+})(Codeivate || (Codeivate = {}));
+
+(function (Codeivate) {
+    var Score = (function () {
+        var thisDB;
+        function Score(data) {
+            var openRequest = indexedDB.open("score",1);
+
+            openRequest.onupgradeneeded = function(e) {
+                console.log("Upgrading DB...");
+                thisDB = e.target.result;
+                if(!thisDB.objectStoreNames.contains("scores")) {
+                    thisDB.createObjectStore("scores");
+                }
+            }
+
+            openRequest.onsuccess = function(e) {
+                thisDB = e.target.result;
+            }
+
+            openRequest.onerror = function(e) {
+                console.log("Error with database");
+                console.dir(e);
+            }
+        }
+
+
+        Extension.prototype.update = function (data) {
+            var _this = this;
+            thisDB
+        }
+        return Score;
+    })();
+    Codeivate.Score = Score;
 })(Codeivate || (Codeivate = {}));
