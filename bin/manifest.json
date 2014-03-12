@@ -2,11 +2,12 @@
 	"manifest_version": 2,
 	"name": "Codeivate Chrome",
 	"description": "Check your Codeivate Profile",
-	"version": "1.5.3.4",
+	"version": "1.5.3.5",
 	"permissions": [
 		"http://codeivate.com/users/*.json",
 		"notifications",
-		"tabs"
+		"tabs",
+        "storage"
 	],
 	"icons": {
 		"16": "icon.png",
