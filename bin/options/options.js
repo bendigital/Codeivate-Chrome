@@ -25,68 +25,68 @@ $(document).ready(function () {
         chrome.runtime.sendMessage({action: "restart"}, function (response) {
             console.log(response.farewell);
         });
-    }
 
 
-    $('#reset').click(function () {
-        console.log('resetting');
-        localStorage.clear();
+        $('#reset').click(function () {
+            console.log('resetting');
+            localStorage.clear();
 
-        $('#submit').prop('disabled', false).removeClass('disabled').button('reset');
-        $('#username').prop('disabled', false);
-        $('#submit').removeClass('btn-primary btn-success btn-warning');
-        $('.form-group').removeClass('has-success');
-        $('#submit').addClass('btn-primary');
-        reloadPlugin();
-
-    });
-
-    $('#submit').click(function () {
-
-        var username = $("#username").val();
-
-
-        $('#submit').button('loading');
-        if (username !== "") {
-            var codeivate = new Codeivate.Extension(username, document);
-            codeivate.request(function (res, stauts) {
-                var raw = JSON.parse(res);
-                var data = new Codeivate.User(raw);
-                if (typeof data.error == "undefined") {
-                    localStorage['user'] = data.name;
-
-                    localStorage['notificationLangLevel'] = $('#notificationLangLevel').prop('checked');
-                    localStorage['notificationStoppedCoding'] = $('#notificationStoppedCoding').prop('checked');
-                    localStorage['notificationHourGained'] = $('#notificationHourGained').prop('checked');
-
-                    $("submit").prop('disabled', true);
-                    $("username").prop('disabled', true);
-                    $('#submit').removeClass('btn-primary btn-success btn-warning');
-                    $('#submit').addClass('btn-success');
-
-                    $('#submit').button('reset');
-                    $('.form-group').removeClass('has-error');
-                    $('.form-group').addClass('has-success');
-                    $('.username_error').empty();
-                    reloadPlugin();
-                } else {
-                    $('#submit').removeClass('btn-primary btn-success btn-warning');
-                    $('#submit').addClass('btn-primary');
-                    $('.form-group').addClass('has-error');
-                    $('.username_error').html($('<strong>').html('enter a valid username'));
-                    $('#submit').button('reset');
-                    console.error("status code: " + response.status);
-                }
-            });
-        } else {
-            alert('please enter a username');
+            $('#submit').prop('disabled', false).removeClass('disabled').button('reset');
+            $('#username').prop('disabled', false);
             $('#submit').removeClass('btn-primary btn-success btn-warning');
-            $('#submit').addClass('btn-warning');
-            $('#submit').button('reset');
+            $('.form-group').removeClass('has-success');
+            $('#submit').addClass('btn-primary');
+            reloadPlugin();
 
-        }
-    });
+        });
 
-    pageLoad();
+        $('#submit').click(function () {
+
+            var username = $("#username").val();
+
+
+            $('#submit').button('loading');
+            if (username !== "") {
+                var codeivate = new Codeivate.Extension(username, document);
+                codeivate.request(function (res, stauts) {
+                    var raw = JSON.parse(res);
+                    var data = new Codeivate.User(raw);
+                    if (typeof data.error == "undefined") {
+                        localStorage['user'] = data.name;
+
+                        localStorage['notificationLangLevel'] = $('#notificationLangLevel').prop('checked');
+                        localStorage['notificationStoppedCoding'] = $('#notificationStoppedCoding').prop('checked');
+                        localStorage['notificationHourGained'] = $('#notificationHourGained').prop('checked');
+
+                        $("submit").prop('disabled', true);
+                        $("username").prop('disabled', true);
+                        $('#submit').removeClass('btn-primary btn-success btn-warning');
+                        $('#submit').addClass('btn-success');
+
+                        $('#submit').button('reset');
+                        $('.form-group').removeClass('has-error');
+                        $('.form-group').addClass('has-success');
+                        $('.username_error').empty();
+                        reloadPlugin();
+                    } else {
+                        $('#submit').removeClass('btn-primary btn-success btn-warning');
+                        $('#submit').addClass('btn-primary');
+                        $('.form-group').addClass('has-error');
+                        $('.username_error').html($('<strong>').html('enter a valid username'));
+                        $('#submit').button('reset');
+                        console.error("status code: " + response.status);
+                    }
+                });
+            } else {
+                alert('please enter a username');
+                $('#submit').removeClass('btn-primary btn-success btn-warning');
+                $('#submit').addClass('btn-warning');
+                $('#submit').button('reset');
+
+            }
+        });
+
+        pageLoad();
+    }
 
 });
